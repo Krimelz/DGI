@@ -41,17 +41,15 @@ public class DragonCurve : MonoBehaviour
     private void Draw() {
         line.positionCount = dots.Count;
         line.SetPositions(dots.ToArray());
-
-        foreach (var dot in dots) {
-            Debug.Log(dot);
-        }
     }
 
     public void Calculate() {
         Init();
+
         for (int i = 0; i < levels; i++) {
             Generate();
         }
+
         Draw();
     }
 }
