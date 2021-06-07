@@ -19,6 +19,8 @@ public class Caesar : MonoBehaviour {
 
     private List<Text> chars = new List<Text>();
 
+    private bool isEncode;
+
     private void Start() {
         Init();
         SpawnChars();
@@ -49,7 +51,7 @@ public class Caesar : MonoBehaviour {
         }
     }
 
-    public void Encode() {
+    private void Encode() {
         string text = encode.text;
         string encoded = string.Empty;
 
@@ -61,7 +63,7 @@ public class Caesar : MonoBehaviour {
         decode.text = encoded;
     }
 
-    public void Decode() {
+    private void Decode() {
         string text = decode.text;
         string decoded = string.Empty;
 
@@ -73,8 +75,16 @@ public class Caesar : MonoBehaviour {
         encode.text = decoded;
     }
 
-    private void UpdateText() {
+    public void SetEncode(bool value) {
+        isEncode = value;
+    }
 
+    public void UpdateText() {
+        if (isEncode) {
+            Encode();
+        } else {
+            Decode();
+        }
     }
 
     public void ToLeft() {
@@ -88,12 +98,12 @@ public class Caesar : MonoBehaviour {
     }
 
     public void ToRight() {
-        char tmp = changed[0];
+        char tmp = changed[changed.Count - 1];
 
-        for (int i = 0; i < changed.Count - 1; i++) {
-            changed[i] = changed[i + 1];
+        for (int i = changed.Count - 1; i > 0; i--) {
+            changed[i] = changed[i - 1];
         }
 
-        changed[changed.Count - 1] = tmp;
+        changed[0] = tmp;
     }
 }
