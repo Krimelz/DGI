@@ -4,43 +4,42 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Cell : MonoBehaviour, IPointerEnterHandler
-{
-    public bool IsFill { get; private set; }
+public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler {
+	public bool IsFill { get; private set; }
 
-    public Color defaultColor;
-    public Color fillColor;
+	public Color defaultColor;
+	public Color fillColor;
 
-    private Image cellImage;
+	private Image cellImage;
 
-    void Start()
-    {
-        cellImage = GetComponent<Image>();
+	void Start() {
+		cellImage = GetComponent<Image>();
+		cellImage.color = defaultColor;
+	}
 
-        cellImage.color = defaultColor;
-    }
+	public void Clear() {
+		cellImage.color = defaultColor;
+		IsFill = false;
+	}
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (Input.GetMouseButton(0))
-        {
-            Fill();
-        }
-        else if (Input.GetMouseButton(1))
-        {
-            Clear();
-        }
-    }
+	private void Fill() {
+		cellImage.color = fillColor;
+		IsFill = true;
+	}
 
-    private void Clear()
-    {
-        cellImage.color = defaultColor;
-        IsFill = false;
-    }
+	public void OnPointerDown(PointerEventData eventData) {
+		if (Input.GetMouseButton(0)) {
+			Fill();
+		} else if (Input.GetMouseButton(1)) {
+			Clear();
+		}
+	}
 
-    private void Fill()
-    {
-        cellImage.color = fillColor;
-        IsFill = true;
-    }
+	public void OnPointerEnter(PointerEventData eventData) {
+		if (Input.GetMouseButton(0)) {
+			Fill();
+		} else if (Input.GetMouseButton(1)) {
+			Clear();
+		}
+	}
 }
